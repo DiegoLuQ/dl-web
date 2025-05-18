@@ -1,11 +1,8 @@
 # Usar una imagen base oficial de Nginx ligera
 FROM nginx:alpine
 
-# Eliminar la configuración por defecto de Nginx
-RUN rm /etc/nginx/conf.d/default.conf
-
-# Copiar nuestra configuración personalizada de Nginx
-COPY nginx.conf /etc/nginx/conf.d/
+# Copiar nuestra configuración personalizada de Nginx para que sea la principal
+COPY nginx.conf /etc/nginx/nginx.conf
 
 # Copiar los archivos HTML y CSS al directorio raíz de Nginx
 COPY ./html /usr/share/nginx/html
