@@ -1,0 +1,149 @@
+# --- Docker ---
+# Ignore Docker specific files if they are generated locally outside of images
+# .dockerignore is the preferred way to exclude files from the Docker image build context
+
+# --- Environment Variables ---
+# CRITICAL: Never commit your .env file!
+.env
+.env.*.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# --- Application Build Output ---
+# (Adjust based on your specific application framework/language)
+# For example:
+# build/
+# dist/
+# target/
+# public/build/ # Example for Symfony Encore
+# node_modules/ # If you build frontend assets locally before Docker
+# vendor/ # For PHP Composer dependencies, if not managed solely within Docker
+
+# --- Logs ---
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+docker-compose.log
+
+# --- IDEs and Editors ---
+# JetBrains (PhpStorm, WebStorm, IntelliJ, PyCharm, etc.)
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# VS Code
+.vscode/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Atom
+.atom/
+
+# Netbeans
+/nbproject/
+
+# Eclipse
+.project
+.cproject
+.settings/
+
+# Vi/Vim
+*~
+*.swp
+*.swo
+
+# --- OS generated files ---
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Windows
+desktop.ini
+
+# --- Language & Framework Specific ---
+# Python
+__pycache__/
+*.py[cod]
+*.pyc
+*.pyo
+*.pyd
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+# Virtual Environments
+.env/
+.venv/
+env/
+venv/
+ENV/
+# Django
+*.mo
+# Flask
+instance/
+.webassets-cache
+
+# Node.js
+node_modules/
+package-lock.json # Usually committed, but can be ignored if yarn.lock is used and preferred
+yarn.lock         # Usually committed, but can be ignored if package-lock.json is used and preferred
+# If you build frontend assets, the output might be here (e.g., public/dist, dist/)
+
+# PHP / Composer
+vendor/
+composer.phar
+# composer.lock # Usually committed to ensure consistent dependencies
+
+# Ruby / Bundler
+.bundle/
+vendor/bundle/
+# Gemfile.lock # Usually committed
+
+# --- Temporary files ---
+tmp/
+temp/
+*.tmp
+*.temp
+*.bak
+*.old
+
+# --- Sensitive files (beyond .env) ---
+# Private keys
+*.pem
+*.key
+# Database dumps (if created locally for testing)
+*.sql
+*.dump
+# SSH config
+.ssh/config # if you have a project-specific ssh config by mistake
+
+# --- Docker specific (if you had a .dockerignore and wanted to version it) ---
+# But usually .dockerignore itself is committed.
+# The content of .dockerignore would list files NOT to copy into the Docker image.

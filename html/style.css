@@ -1,0 +1,784 @@
+:root {
+    --emerald-green: #00c292; /* Verde Esmeralda Principal */
+    --dark-emerald: #00a77e;
+    --cyan-accent: #00e0ff; /* Cian/Turquesa Eléctrico */
+    --dark-cyan: #00b8d4;
+    --dark-grey: #121212; /* Fondo gris oscuro más profundo */
+    --medium-grey: #1e1e1e;
+    --light-grey-card: #2a2a2a; /* Para tarjetas */
+    --text-color: #e0e0e0;
+    --glow-emerald: rgba(0, 194, 146, 0.7);
+    --glow-cyan: rgba(0, 224, 255, 0.7);
+
+    /* Manteniendo algunos del anterior por si acaso, pero priorizando los nuevos */
+    --purple: #9b59b6; /* Púrpura (obsoleto) */
+    --yellow: #f1c40f; /* Amarillo (obsoleto) */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Rajdhani', sans-serif; /* Nueva fuente base, más tech */
+    background-color: var(--dark-grey);
+    color: var(--text-color);
+    line-height: 1.7;
+    overflow-x: hidden;
+}
+
+#universe-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    /* text-align: center; <- He comentado esto, ya que no todos los contenedores deben estar centrados por defecto. Se aplica donde sea necesario. */
+}
+
+/* --- Navbar --- */
+.navbar {
+    background: rgba(18, 18, 18, 0.8); /* Fondo semi-transparente oscuro */
+    backdrop-filter: blur(10px);
+    padding: 1rem 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    border-bottom: 1px solid var(--medium-grey);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.8rem;
+    color: var(--emerald-green);
+    text-decoration: none;
+    font-weight: 700;
+    position: relative; /* For glitch */
+}
+/* Glitch effect for logo - subtle */
+.glitch {
+    position: relative;
+    text-shadow: 0.03em 0 0 var(--glow-cyan), -0.015em -0.03em 0 var(--glow-emerald), 0.015em 0.03em 0 var(--glow-cyan);
+    animation: glitch-subtle 3s infinite alternate;
+}
+@keyframes glitch-subtle {
+  0%, 100% { text-shadow: 0.03em 0 0 var(--glow-cyan), -0.015em -0.03em 0 var(--glow-emerald), 0.015em 0.03em 0 var(--glow-cyan); }
+  50% { text-shadow: -0.03em 0 0 var(--glow-emerald), 0.015em 0.03em 0 var(--glow-cyan), -0.015em -0.03em 0 var(--glow-emerald); }
+}
+
+
+.nav-menu {
+    list-style: none;
+    display: flex;
+}
+
+.nav-menu li {
+    margin-left: 25px;
+}
+
+.nav-menu a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 5px 0;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.nav-menu a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: var(--emerald-green);
+    transition: width 0.3s ease;
+}
+
+.nav-menu a:hover, .nav-menu a.active {
+    color: var(--emerald-green);
+}
+.nav-menu a:hover::after, .nav-menu a.active::after {
+    width: 100%;
+}
+
+.dropdown {
+    position: relative;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--medium-grey);
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
+    z-index: 1;
+    border-radius: 0 0 8px 8px;
+    border-top: 2px solid var(--emerald-green);
+    padding-top: 5px;
+    text-align: left; /* Para que el texto en el dropdown esté alineado a la izquierda */
+}
+.dropdown-content a {
+    color: var(--text-color);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 0.9rem;
+}
+.dropdown-content a::after { display: none; } /* Remove underline animation */
+.dropdown-content a:hover {
+    background-color: var(--light-grey-card);
+    color: var(--emerald-green);
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+.dropbtn i { margin-left: 5px; font-size: 0.8em; }
+
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--emerald-green);
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+
+/* --- Hero Section --- */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center; 
+    padding: 120px 20px 60px;
+    position: relative;
+    background: linear-gradient(rgba(18, 18, 18, 0.6), rgba(18, 18, 18, 0.9));
+}
+
+.hero-content h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(2.2rem, 7vw, 4.5rem);
+    color: var(--emerald-green);
+    margin-bottom: 1rem;
+    text-shadow: 0 0 10px var(--glow-emerald), 0 0 20px var(--glow-emerald);
+    line-height: 1.2;
+}
+
+
+/* Glitch Effect for Hero H1 */
+.glitch-hero {
+    position: relative;
+    text-shadow: 0.05em 0 0 var(--glow-cyan), -0.025em -0.05em 0 var(--glow-emerald), 0.025em 0.05em 0 var(--glow-cyan);
+    animation: glitch-main 850ms infinite;
+}
+.glitch-hero span { display: block; position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: -1; }
+.glitch-hero span:before, .glitch-hero span:after {
+    content: attr(data-text);
+    position: absolute; left: 0; right: 0; top: 0;
+    background: var(--dark-grey);
+    overflow: hidden; clip: rect(0,0,0,0);
+}
+.glitch-hero span:before {
+    left: 0.01em; text-shadow: -0.05em 0 var(--glow-cyan);
+    animation: glitch-top 1.7s infinite linear alternate-reverse;
+}
+.glitch-hero span:after {
+    left: -0.01em; text-shadow: -0.05em 0 var(--glow-emerald), 0.05em 0.05em var(--glow-cyan);
+    animation: glitch-bottom 1.2s infinite linear alternate-reverse;
+}
+@keyframes glitch-main {
+  0% { text-shadow: 0.05em 0 0 var(--glow-cyan), -0.025em -0.05em 0 var(--glow-emerald), 0.025em 0.05em 0 var(--glow-cyan); }
+  15% { text-shadow: 0.05em 0 0 var(--glow-cyan), -0.025em -0.05em 0 var(--glow-emerald), 0.025em 0.05em 0 var(--glow-cyan); }
+  16% { text-shadow: -0.05em -0.025em 0 var(--glow-cyan), 0.025em 0.05em 0 var(--glow-emerald), -0.05em -0.05em 0 var(--glow-cyan); }
+  49% { text-shadow: -0.05em -0.025em 0 var(--glow-cyan), 0.025em 0.05em 0 var(--glow-emerald), -0.05em -0.05em 0 var(--glow-cyan); }
+  50% { text-shadow: 0.05em 0.025em 0 var(--glow-cyan), 0.05em -0.05em 0 var(--glow-emerald), 0 -0.05em 0 var(--glow-cyan); }
+  99% { text-shadow: 0.05em 0.025em 0 var(--glow-cyan), 0.05em -0.05em 0 var(--glow-emerald), 0 -0.05em 0 var(--glow-cyan); }
+  100% { text-shadow: -0.05em 0 0 var(--glow-cyan), -0.025em -0.05em 0 var(--glow-emerald), 0.025em 0.05em 0 var(--glow-cyan); }
+}
+@keyframes glitch-top { 
+  0%, 100% { clip-path: inset(0% 0% 50% 0%); }
+  25% { clip-path: inset(20% 0% 30% 0%); }
+  50% { clip-path: inset(50% 0% 0% 0%); }
+  75% { clip-path: inset(30% 0% 20% 0%); }
+}
+@keyframes glitch-bottom { 
+  0%, 100% { clip-path: inset(50% 0% 0% 0%); }
+  25% { clip-path: inset(70% 0% 10% 0%); }
+  50% { clip-path: inset(0% 0% 50% 0%); }
+  75% { clip-path: inset(60% 0% 20% 0%); }
+}
+
+
+.slogan {
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem); 
+    color: var(--text-color);
+    font-weight: 400;
+    max-width: 700px;          
+    margin-left: auto;         
+    margin-right: auto;        
+    margin-bottom: 2.5rem;     
+    text-align: center;        
+}
+
+.highlight-emerald {
+    color: var(--emerald-green);
+    font-weight: bold;
+    text-shadow: 0 0 8px var(--glow-emerald);
+}
+.highlight-cyan {
+    color: var(--cyan-accent);
+    font-weight: bold;
+    text-shadow: 0 0 8px var(--glow-cyan);
+}
+
+.cta-button {
+    display: inline-block;
+    background: linear-gradient(45deg, var(--emerald-green), var(--dark-emerald));
+    color: #fff; 
+    padding: 14px 35px;
+    text-decoration: none;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    border: 2px solid var(--emerald-green);
+    box-shadow: 0 0 15px var(--glow-emerald);
+    font-weight: 600;
+}
+.cta-button:hover {
+    background: linear-gradient(45deg, var(--dark-emerald), var(--emerald-green));
+    transform: scale(1.05) translateY(-3px);
+    box-shadow: 0 0 25px var(--glow-emerald);
+    color: #fff;
+}
+
+/* --- General Section Styling --- */
+.section-futuristic {
+    padding: 100px 0; 
+    position: relative;
+    text-align: center; /* Para centrar el h2 de la sección */
+}
+.section-futuristic:first-of-type {
+    padding-top: 140px; 
+}
+.section-futuristic::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: var(--emerald-green);
+    border-radius: 2px;
+    box-shadow: 0 0 10px var(--glow-emerald);
+}
+
+.section-futuristic h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    /* text-align: center;  Ya está en .section-futuristic */
+    margin-bottom: 60px;
+    color: var(--text-color);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* --- "Nosotros" Section --- */
+.nosotros-content > div { /* Centrar las tarjetas dentro de nosotros-content */
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 40px;
+    max-width: 900px; /* Ajusta este valor según sea necesario para el ancho de las tarjetas */
+    text-align: left; /* Para que el texto dentro de las tarjetas esté alineado a la izquierda */
+}
+.propuesta-valor {
+    text-align: center; /* La propuesta de valor sí puede tener texto centrado */
+    border-left-color: var(--cyan-accent) !important; 
+}
+.propuesta-valor p {
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+/* .mission-vision-grid ya no se usa, se puede eliminar */
+
+.futuristic-card {
+    background: var(--light-grey-card);
+    padding: 30px;
+    border-radius: 15px;
+    border: 1px solid var(--medium-grey);
+    border-left: 5px solid var(--emerald-green);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.futuristic-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px var(--glow-emerald);
+}
+.futuristic-card h3 {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--cyan-accent);
+    margin-bottom: 15px;
+    font-size: 1.6rem;
+}
+.ia-class-structure ul {
+    list-style: none;
+    padding-left: 0;
+}
+.ia-class-structure ul li {
+    margin-bottom: 15px;
+    padding-left: 30px;
+    position: relative;
+}
+.icon-list {
+    color: var(--emerald-green);
+    position: absolute;
+    left: 0;
+    top: 5px; 
+    font-size: 1.2em;
+}
+.single-mission-vision-card .mission-content,
+.single-mission-vision-card .vision-content {
+    margin-bottom: 20px; 
+}
+.single-mission-vision-card .vision-content {
+    margin-bottom: 0; 
+}
+.single-mission-vision-card h3 {
+    margin-bottom: 10px; 
+}
+.card-divider { 
+    border: none;
+    height: 1px;
+    background-color: var(--medium-grey); 
+    margin: 25px 0; 
+}
+
+
+/* --- "Servicios" Section --- */
+.service-block {
+    margin-bottom: 60px;
+    padding: 30px;
+    background: rgba(30, 30, 30, 0.5);
+    border-radius: 10px;
+    border: 1px solid var(--medium-grey);
+    text-align: left; /* Para que el contenido de los bloques de servicio esté alineado a la izquierda */
+}
+.service-block-description {
+    text-align: center;
+}
+.service-block h3 {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--emerald-green);
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center; /* Los H3 de los bloques sí centrados */
+}
+.icon-title {
+    margin-right: 10px;
+    color: var(--cyan-accent);
+}
+.service-details-list {
+    list-style: none;
+    padding-left: 20px;
+    margin: 20px 0;
+}
+.service-details-list li {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+.service-details-list li::before {
+    content: "✧";
+    color: var(--cyan-accent);
+    margin-right: 10px;
+    font-weight: bold;
+}
+.ia-teacher-focus {
+    margin-top: 30px;
+    border-left-color: var(--cyan-accent) !important;
+    background: var(--medium-grey); 
+}
+.ia-teacher-focus h4 {
+    color: var(--emerald-green);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+}
+.ia-teacher-focus i {
+    margin-right: 8px;
+}
+
+/* Plans (within Services) */
+.plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: 30px;
+    margin-top: 30px;
+    text-align: center; /* Para que las tarjetas de planes estén centradas si no ocupan todo el ancho */
+    justify-items: center; /* Centrar horizontalmente las tarjetas en sus celdas */
+    justify-content: center; /* Centrar el grid en sí mismo */
+}
+.plan-card {
+    background: var(--light-grey-card);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center; /* El texto DENTRO de la tarjeta sí va centrado */
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+.plan-card:hover {
+    transform: scale(1.03);
+    border-color: var(--emerald-green);
+    box-shadow: 0 0 30px var(--glow-emerald);
+}
+.plan-card.highlight-plan {
+    border-color: var(--cyan-accent);
+    transform: scale(1.05);
+    box-shadow: 0 0 30px var(--glow-cyan);
+}
+.plan-card.highlight-plan:hover {
+    box-shadow: 0 0 40px var(--glow-cyan);
+}
+.plan-header h3 {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--emerald-green);
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+.plan-card.highlight-plan .plan-header h3 {
+    color: var(--cyan-accent);
+}
+.price {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--cyan-accent);
+    margin-bottom: 20px;
+}
+.plan-card.highlight-plan .price {
+    color: var(--emerald-green);
+}
+.currency {
+    font-size: 1rem;
+    font-weight: normal;
+    color: var(--text-color);
+}
+.plan-description {
+    margin-bottom: 25px;
+    min-height: 50px; /* Ajustado para asegurar consistencia */
+}
+.cta-button-plan {
+    display: inline-block;
+    background: var(--emerald-green);
+    color: #fff;
+    padding: 10px 25px;
+    text-decoration: none;
+    font-family: 'Orbitron', sans-serif;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    border: 1px solid var(--emerald-green);
+    font-weight: 600;
+}
+.plan-card.highlight-plan .cta-button-plan {
+    background: var(--cyan-accent);
+    color: var(--dark-grey);
+    border-color: var(--cyan-accent);
+}
+.cta-button-plan:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+/* ESTILOS PARA LA NUEVA TARJETA SUPER PREMIUM Y SUS CARACTERÍSTICAS DE IA */
+.plan-ia-features {
+    list-style: none;
+    padding: 0;
+    margin: 15px auto 20px; /* Añadido margen inferior para separar del botón */
+    text-align: left; 
+    max-width: 90%; 
+    font-size: 0.9rem;
+}
+.plan-ia-features li {
+    margin-bottom: 8px;
+    padding-left: 5px; 
+    display: flex; 
+    align-items: center;
+}
+.plan-ia-features li i {
+    color: var(--emerald-green); 
+    margin-right: 8px;
+    width: 20px; 
+    text-align: center;
+}
+.plan-card.super-premium-plan {
+    border-color: var(--emerald-green); 
+    box-shadow: 0 0 35px var(--glow-emerald), 0 0 15px var(--glow-cyan); 
+    transform: scale(1.07); 
+    background: linear-gradient(145deg, var(--light-grey-card), var(--medium-grey));
+    grid-column: 1 / -1; /* Hacer que ocupe todo el ancho del grid */
+    max-width: 350px; /* Limitar el ancho para que no se vea demasiado extendido */
+    margin: 0 auto; /* Centrar horizontalmente */
+}
+.plan-card.super-premium-plan:hover {
+    transform: scale(1.09); 
+    box-shadow: 0 0 45px var(--glow-emerald), 0 0 20px var(--glow-cyan);
+}
+.plan-card.super-premium-plan .plan-header h3 {
+    color: var(--emerald-green); 
+}
+.plan-card.super-premium-plan .price {
+    color: var(--cyan-accent); 
+    font-size: 2.7rem; 
+}
+.plan-card.super-premium-plan .cta-button-plan {
+    background: linear-gradient(45deg, var(--emerald-green), var(--cyan-accent));
+    color: var(--dark-grey); 
+    border: none; 
+    font-weight: bold;
+}
+/* FIN DE ESTILOS PARA NUEVA TARJETA */
+
+
+/* Features (within Services - Web) */
+.features-container {
+    margin-top: 40px;
+    padding: 20px;
+    background: rgba(30, 30, 30, 0.3);
+    border-radius: 10px;
+    text-align: center; /* Para centrar el h4 de características */
+}
+.features-container h4 {
+    /* text-align: center; Ya está en .features-container */
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    color: var(--cyan-accent);
+    font-family: 'Orbitron', sans-serif;
+}
+.features-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 15px;
+    text-align: left; /* El texto dentro de cada item de la lista sí va a la izquierda */
+}
+.features-list li {
+    background: var(--light-grey-card);
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid var(--emerald-green);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    font-size: 0.95rem;
+}
+.features-list li:hover {
+    background-color: var(--medium-grey);
+    transform: translateX(5px);
+}
+.feature-icon {
+    font-size: 1.3rem;
+    margin-right: 12px;
+    color: var(--emerald-green);
+    line-height: 1;
+    width: 25px; 
+    text-align: center;
+}
+
+/* --- Contact Section --- */
+.contact-form {
+    max-width: 700px;
+    margin: 30px auto 0;
+    display: grid;
+    gap: 20px;
+}
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--medium-grey);
+    border: 1px solid var(--emerald-green);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+}
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+    color: #888;
+}
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: var(--cyan-accent);
+    box-shadow: 0 0 10px var(--glow-cyan);
+}
+.contact-form textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+.contact-form button {
+    font-family: 'Orbitron', sans-serif;
+    background: var(--cyan-accent);
+    color: var(--dark-grey);
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px var(--glow-cyan);
+}
+.contact-form button:hover {
+    background: var(--dark-cyan);
+    transform: translateY(-3px);
+    box-shadow: 0 0 25px var(--glow-cyan);
+}
+
+/* --- Footer --- */
+.footer-futuristic {
+    padding: 50px 20px 30px;
+    background-color: #0a0a0a; 
+    border-top: 3px solid var(--emerald-green);
+    text-align: center;
+}
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+.contact-info p {
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+.contact-info p i {
+    color: var(--emerald-green);
+    margin-right: 8px;
+}
+.contact-info a {
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+.contact-info a:hover {
+    color: var(--emerald-green);
+}
+.social-icons a {
+    color: var(--text-color);
+    font-size: 1.8rem;
+    margin: 0 12px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+.social-icons a:hover {
+    color: var(--cyan-accent);
+    transform: scale(1.2);
+}
+.copyright {
+    font-size: 0.9rem;
+    color: #777;
+    margin-top: 20px;
+}
+
+/* --- Scroll Animations --- */
+.section-futuristic, .futuristic-card, .plan-card, .features-list li, .service-block {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.section-futuristic.visible, .futuristic-card.visible, .plan-card.visible, .features-list li.visible, .service-block.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* --- Responsive Design --- */
+@media (max-width: 992px) {
+    .nav-menu {
+        display: none; 
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 65px; 
+        left: 0;
+        background: rgba(18, 18, 18, 0.95);
+        backdrop-filter: blur(5px);
+        padding: 1rem 0;
+    }
+    .nav-menu.active {
+        display: flex; 
+    }
+    .nav-menu li {
+        margin: 10px 0;
+        text-align: center;
+    }
+    .dropdown-content {
+        position: static; 
+        background: transparent;
+        box-shadow: none;
+        border-top: none;
+        padding-top: 0;
+        margin-top: 10px;
+    }
+    .dropdown-content a {
+        padding: 10px 16px;
+        text-align: center;
+        color: #ccc; 
+    }
+    .dropdown-content a:hover {
+        color: var(--emerald-green);
+        background: var(--medium-grey);
+    }
+    .hamburger {
+        display: block; 
+    }
+    .hero { padding-top: 100px; }
+    .section-futuristic:first-of-type { padding-top: 120px; }
+}
+
+@media (max-width: 768px) {
+    .hero-content h1 { font-size: 2rem; }
+    .slogan { font-size: 1rem; }
+    /* .mission-vision-grid, <- Ya no se usa */
+    .plans-grid, .features-list { /* .mission-vision-grid eliminado de aquí */
+        grid-template-columns: 1fr;
+    }
+    .nosotros-content > div { /* Asegurar que las tarjetas en "Nosotros" ocupen el ancho */
+        max-width: 100%;
+    }
+    .section-futuristic h2 { font-size: 1.8rem; margin-bottom: 40px; }
+    .service-block h3 { font-size: 1.6rem; }
+    .footer-content {
+        gap: 15px;
+    }
+    .contact-info p { font-size: 0.9rem; }
+    .social-icons a { font-size: 1.6rem; margin: 0 8px; }
+}
+/* Los estilos de single-mission-vision-card ya están arriba, no es necesario repetirlos */

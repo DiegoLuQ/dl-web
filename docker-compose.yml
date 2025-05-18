@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  web_dl:
+    build:
+      context: .
+      # dockerfile: Dockerfile # Descomenta y ajusta si tu Dockerfile tiene un nombre diferente o está en otra ubicación
+    restart: unless-stopped # Política de reinicio recomendada
+    environment:
+      - VIRTUAL_HOST=${MY_DOMAIN_NAMES}
+      - VIRTUAL_PORT=${MY_VIRTUAL_PORT}
+      - LETSENCRYPT_HOST=${MY_DOMAIN_NAMES}
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL} # Añadido desde el .env
+
+networks:
+  default:
+    name: web_private_red_webapps
+    external: true
